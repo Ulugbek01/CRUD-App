@@ -51,9 +51,9 @@ class App extends Component {
       this.setState({data: res})
     }
 
-    const onSave = (id) => {
-      // this.setState({active: id})
-    }
+    // const onSave = (id) => {
+    //   this.setState({active: id})
+    // }
 
     return (
       <div>
