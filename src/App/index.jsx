@@ -57,7 +57,7 @@ class App extends Component {
     }
 
     const onSearch = (e) => {
-      const filtered = users.filter((user) => user[`${this.state.search}`].includes(e.target.value.toLowerCase()))
+      const filtered = users.filter((user) => `${user[this.state.search]}`.includes(e.target.value.toLowerCase()))
       this.setState({data: filtered})
       // console.log(e.target.value);
     }
