@@ -38,15 +38,6 @@ class App extends Component {
       }
     }
 
-    const onEdit = (id, isActive) => {
-      if(isActive) {
-        this.setState({active: null})
-      }
-      else {
-        this.setState({active: id})
-      }
-    }
-
     const onDelete = (id) => {
       let res = this.state.data.filter((user) => user.id !== id);
       this.setState({data: res})
@@ -61,9 +52,20 @@ class App extends Component {
       this.setState({data: filtered})
       // console.log(e.target.value);
     }
-
-    const onSave = (id) => {
-      // this.setState({active: id})
+  
+    const onEdit = (user, isActive) => {
+      if(isActive) {
+        this.setState({active: null})
+        let edited = this.state.data.map((item) => item.id === user.id ? {...item, name: this.state.name, surname: this.state.surname} : item)
+        this.setState({data: edited});
+      }
+      else {
+        this.setState({
+          active: user.id,
+          name: user.name,
+          surname: user.surname,
+        })
+      }
     }
 
     return (
@@ -99,10 +101,10 @@ class App extends Component {
               this.state.data.map((user) => 
                 <tr key={user.id}>
                   <td>{user.id}</td>
-                  <td>{this.state.active === user.id ? <input className="form-control" defaultValue={user.name}/> : user.name}</td>
-                  <td>{this.state.active === user.id ? <input className="form-control" defaultValue={user.surname}/> : user.surname}</td>
+                  <td>{this.state.active === user.id ? <input onChange={onChange} name="name" className="form-control" value={this.state.name} /> : user.name}</td>
+                  <td>{this.state.active === user.id ? <input onChange={onChange} name="surname" className="form-control" value={this.state.surname} /> : user.surname}</td>
                   <td><button className="btn btn-danger" onClick={()=> onDelete(user.id)}>Delete</button></td>
-                  <td><button className="btn btn-success px-4" onClick={() => onEdit(user.id, this.state.active === user.id)}>{this.state.active === user.id ? 'Save' : 'Edit'}</button></td>
+                  <td><button className="btn btn-success px-4" onClick={() => onEdit(user, this.state.active === user.id)}>{this.state.active === user.id ? 'Save' : 'Edit'}</button></td>
                 </tr>
               )
             }
