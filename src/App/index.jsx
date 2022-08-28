@@ -63,6 +63,7 @@ class App extends Component {
         <input type="text" className="form-control w-25 d-inline-block mx-2" onChange={onChange} value={this.state.surname} name="surname" placeholder="surname"/>
         <button onClick={onAdd} className="btn btn-primary px-4">Add</button>
 
+        { this.state.data.length ? 
         <table className="table table table-dark table-striped mt-3">
           <thead>
             <tr>
@@ -88,6 +89,11 @@ class App extends Component {
             }
           </tbody>
         </table>
+        :
+        <div class="alert alert-warning text-center mt-4" role="alert">
+          Ma'lumot topilmadi!
+        </div>
+        }
       </div>
     )
   }
