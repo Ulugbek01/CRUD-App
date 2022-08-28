@@ -9,6 +9,7 @@ class App extends Component {
       surname: '',
       data: users,
       active: null,
+      search: 'id',
     }
   }
   
@@ -51,6 +52,16 @@ class App extends Component {
       this.setState({data: res})
     }
 
+    const onSelected = (e) => {
+      this.setState({search: e.target.value})
+    }
+
+    const onSearch = (e) => {
+      const filtered = users.filter((user) => user[`${this.state.search}`].includes(e.target.value.toLowerCase()))
+      this.setState({data: filtered})
+      // console.log(e.target.value);
+    }
+
     const onSave = (id) => {
       // this.setState({active: id})
     }
@@ -59,8 +70,16 @@ class App extends Component {
       <div>
         <h2>Name: {this.state.name}</h2>
         <h2>Surname: {this.state.surname}</h2>
-        <input type="text" className="form-control w-25 d-inline-block" onChange={onChange} value={this.state.name} name="name" placeholder="name"/>
-        <input type="text" className="form-control w-25 d-inline-block mx-2" onChange={onChange} value={this.state.surname} name="surname" placeholder="surname"/>
+
+        <input onChange={onSearch} type="text" placeholder="search" className="form-control w-25 d-inline-block me-2 border border-success"/>
+        <select onChange={onSelected} className="form-select d-inline-block me-2 bg-primary" style={{width: '10%', color: '#fff'}}>
+          <option value="id">Id</option>
+          <option value="name">Name</option>
+          <option value="surname">Surname</option>
+        </select>
+
+        <input type="text" className="form-control border border-primary w-25 d-inline-block" onChange={onChange} value={this.state.name} name="name" placeholder="name"/>
+        <input type="text" className="form-control border border-primary w-25 d-inline-block mx-2" onChange={onChange} value={this.state.surname} name="surname" placeholder="surname"/>
         <button onClick={onAdd} className="btn btn-primary px-4">Add</button>
 
         { this.state.data.length ? 
@@ -90,7 +109,7 @@ class App extends Component {
           </tbody>
         </table>
         :
-        <div class="alert alert-warning text-center mt-4" role="alert">
+        <div className="alert alert-warning text-center mt-4" role="alert">
           Ma'lumot topilmadi!
         </div>
         }
